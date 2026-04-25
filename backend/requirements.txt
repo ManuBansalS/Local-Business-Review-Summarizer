@@ -6,7 +6,7 @@
 # langchain==0.1.12
 # langchain-community==0.0.28
 # langchain-openai==0.1.1
-# ollama==0.1.7
+# openai==1.14.0
 # pydantic==2.6.4
 # python-multipart==0.0.9
 
@@ -17,7 +17,9 @@ requests
 chromadb
 langchain
 langchain-community
+langchain-ollama
 langchain-openai
-ollama
+openai
 pydantic
 python-multipart
+dotenv

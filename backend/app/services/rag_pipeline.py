@@ -1,7 +1,8 @@
 import os
 from typing import List
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+# from langchain_openai import OpenAIEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from dotenv import load_dotenv
 from app.utils.context_manager import context_manager
@@ -13,12 +14,13 @@ class RAGPipeline:
     RAG Pipeline: Chunking, Embedding, and ChromaDB storage.
     """
     def __init__(self):
-        self.openai_api_key = os.getenv("OPENAI_API_KEY")
+        # self.openai_api_key = os.getenv("OPENAI_API_KEY")
         self.collection_name = os.getenv("CHROMADB_COLLECTION", "business_reviews")
         self.persist_directory = "backend/database/chroma_db"
         
         # Initialize embeddings
-        self.embeddings = OpenAIEmbeddings(openai_api_key=self.openai_api_key)
+        # self.embeddings = OpenAIEmbeddings(openai_api_key=self.openai_api_key)
+        self.embeddings = OllamaEmbeddings(model="nomic-embed-text")
         
         # Text splitter configuration
         self.text_splitter = RecursiveCharacterTextSplitter(

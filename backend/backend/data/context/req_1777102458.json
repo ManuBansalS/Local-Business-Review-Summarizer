@@ -1,0 +1,52 @@
+{
+    "request_id": "req_1777102458",
+    "timestamp": "2026-04-25T13:04:18.408521",
+    "input": {
+        "business_name": "Starbucks",
+        "location": ""
+    },
+    "steps": [
+        {
+            "timestamp": "2026-04-25T13:04:18.408552",
+            "step": "request_started",
+            "message": "Started processing reviews for Starbucks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:04:18.409296",
+            "step": "mcp_ingestion_started",
+            "message": "MCP Tool: fetch_business_reviews triggered for Starbucks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:04:18.410009",
+            "step": "search_started",
+            "message": "Searching for reviews of Starbucks in Serper",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:04:20.075125",
+            "step": "search_completed",
+            "message": "Found 0 reviews for Starbucks Coffee Company",
+            "data": {
+                "business_title": "Starbucks Coffee Company",
+                "rating": null,
+                "review_count": null
+            }
+        },
+        {
+            "timestamp": "2026-04-25T13:04:20.078226",
+            "step": "mcp_ingestion_empty",
+            "message": "No reviews were fetched by MCP",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:04:20.079018",
+            "step": "request_finalized",
+            "message": "Completed summary generation",
+            "data": {
+                "summary": "Insufficient data to generate a valid summary."
+            }
+        }
+    ]
+}

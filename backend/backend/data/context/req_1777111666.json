@@ -1,0 +1,88 @@
+{
+    "request_id": "req_1777111666",
+    "timestamp": "2026-04-25T15:37:46.652151",
+    "input": {
+        "business_name": "Starbucks",
+        "location": "London"
+    },
+    "steps": [
+        {
+            "timestamp": "2026-04-25T15:37:46.652181",
+            "step": "request_started",
+            "message": "Started processing reviews for Starbucks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:37:46.655176",
+            "step": "mcp_ingestion_started",
+            "message": "MCP Tool: fetch_business_reviews triggered for Starbucks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:37:46.655856",
+            "step": "search_started",
+            "message": "Searching for reviews of Starbucks in Serper",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:37:50.530731",
+            "step": "search_completed",
+            "message": "Found 20 reviews for Starbucks Coffee",
+            "data": {
+                "business_title": "Starbucks Coffee",
+                "rating": null,
+                "review_count": null
+            }
+        },
+        {
+            "timestamp": "2026-04-25T15:37:50.535749",
+            "step": "mcp_raw_storage",
+            "message": "Stored raw review data in backend/data/raw\\Starbucks_20260425_153750.json",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:37:50.536523",
+            "step": "rag_processing_started",
+            "message": "Processing 20 reviews for vector storage",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:37:50.538822",
+            "step": "rag_chunking_completed",
+            "message": "Split reviews into 24 chunks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:38:48.080817",
+            "step": "rag_error",
+            "message": "Error indexing to ChromaDB: 'Chroma' object has no attribute 'persist'",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:38:50.275407",
+            "step": "rag_retrieval_completed",
+            "message": "Retrieved 10 relevant chunks for synthesis",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:38:50.276772",
+            "step": "llm_synthesis_started",
+            "message": "Generating summary for Starbucks via llama3",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:39:11.603827",
+            "step": "llm_synthesis_error",
+            "message": "Error during LLM synthesis: llama runner process has terminated: %!w(<nil>) (status code: 500)",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T15:39:11.606543",
+            "step": "request_finalized",
+            "message": "Completed summary generation",
+            "data": {
+                "summary": "Error generating summary: llama runner process has terminated: %!w(<nil>) (status code: 500)"
+            }
+        }
+    ]
+}

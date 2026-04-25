@@ -1,0 +1,88 @@
+{
+    "request_id": "req_1777106874",
+    "timestamp": "2026-04-25T14:17:54.091444",
+    "input": {
+        "business_name": "Starbucks ",
+        "location": "London"
+    },
+    "steps": [
+        {
+            "timestamp": "2026-04-25T14:17:54.091498",
+            "step": "request_started",
+            "message": "Started processing reviews for Starbucks ",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:17:54.094295",
+            "step": "mcp_ingestion_started",
+            "message": "MCP Tool: fetch_business_reviews triggered for Starbucks ",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:17:54.095810",
+            "step": "search_started",
+            "message": "Searching for reviews of Starbucks  in Serper",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:17:58.463782",
+            "step": "search_completed",
+            "message": "Found 20 reviews for Starbucks Coffee",
+            "data": {
+                "business_title": "Starbucks Coffee",
+                "rating": null,
+                "review_count": null
+            }
+        },
+        {
+            "timestamp": "2026-04-25T14:17:58.474516",
+            "step": "mcp_raw_storage",
+            "message": "Stored raw review data in backend/data/raw\\Starbucks__20260425_141758.json",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:17:58.475802",
+            "step": "rag_processing_started",
+            "message": "Processing 20 reviews for vector storage",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:17:58.480218",
+            "step": "rag_chunking_completed",
+            "message": "Split reviews into 24 chunks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:18:02.771252",
+            "step": "rag_error",
+            "message": "Error indexing to ChromaDB: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:18:04.774192",
+            "step": "rag_retrieval_error",
+            "message": "Error retrieving from ChromaDB: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:18:04.775989",
+            "step": "llm_synthesis_started",
+            "message": "Generating summary for Starbucks  via gpt-4o",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:18:08.121287",
+            "step": "llm_synthesis_error",
+            "message": "Error during LLM synthesis: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T14:18:08.124037",
+            "step": "request_finalized",
+            "message": "Completed summary generation",
+            "data": {
+                "summary": "Error generating summary: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+            }
+        }
+    ]
+}

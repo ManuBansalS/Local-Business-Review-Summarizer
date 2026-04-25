@@ -30,7 +30,7 @@ class SearchService:
             response.raise_for_status()
             data = response.json()
             
-            # Extract places and their reviews
+            # Extract places
             places = data.get("places", [])
             if not places:
                 context_manager.log_step("search_failed", "No places found for the given query")
@@ -38,7 +38,24 @@ class SearchService:
 
             # Focus on the first relevant place
             target_place = places[0]
-            reviews = target_place.get("reviews", [])
+            cid = target_place.get("cid")
+            place_id = target_place.get("placeId")
+            
+            reviews = []
+            if cid or place_id:
+                reviews_url = "https://google.serper.dev/reviews"
+                reviews_payload = {}
+                if cid:
+                    reviews_payload["cid"] = cid
+                else:
+                    reviews_payload["placeId"] = place_id
+                
+                rev_response = requests.post(reviews_url, headers=headers, json=reviews_payload)
+                if rev_response.status_code == 200:
+                    rev_data = rev_response.json()
+                    reviews = rev_data.get("reviews", [])
+                else:
+                    context_manager.log_step("search_reviews_failed", f"Failed to fetch reviews: {rev_response.text}")
             
             context_manager.log_step("search_completed", f"Found {len(reviews)} reviews for {target_place.get('title')}", {
                 "business_title": target_place.get("title"),

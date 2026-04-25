@@ -1,0 +1,88 @@
+{
+    "request_id": "req_1777104891",
+    "timestamp": "2026-04-25T13:44:51.813924",
+    "input": {
+        "business_name": "Starbucks",
+        "location": "London"
+    },
+    "steps": [
+        {
+            "timestamp": "2026-04-25T13:44:51.813979",
+            "step": "request_started",
+            "message": "Started processing reviews for Starbucks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:44:51.815185",
+            "step": "mcp_ingestion_started",
+            "message": "MCP Tool: fetch_business_reviews triggered for Starbucks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:44:51.816223",
+            "step": "search_started",
+            "message": "Searching for reviews of Starbucks in Serper",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:44:56.620966",
+            "step": "search_completed",
+            "message": "Found 20 reviews for Starbucks Coffee",
+            "data": {
+                "business_title": "Starbucks Coffee",
+                "rating": null,
+                "review_count": null
+            }
+        },
+        {
+            "timestamp": "2026-04-25T13:44:56.630025",
+            "step": "mcp_raw_storage",
+            "message": "Stored raw review data in backend/data/raw\\Starbucks_20260425_134456.json",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:44:56.630932",
+            "step": "rag_processing_started",
+            "message": "Processing 20 reviews for vector storage",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:44:56.635590",
+            "step": "rag_chunking_completed",
+            "message": "Split reviews into 24 chunks",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:45:16.257124",
+            "step": "rag_error",
+            "message": "Error indexing to ChromaDB: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:45:18.859137",
+            "step": "rag_retrieval_error",
+            "message": "Error retrieving from ChromaDB: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:45:18.860514",
+            "step": "llm_synthesis_started",
+            "message": "Generating summary for Starbucks via llama3",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:45:18.935183",
+            "step": "llm_synthesis_error",
+            "message": "Error during LLM synthesis: model 'llama3' not found (status code: 404)",
+            "data": null
+        },
+        {
+            "timestamp": "2026-04-25T13:45:18.936982",
+            "step": "request_finalized",
+            "message": "Completed summary generation",
+            "data": {
+                "summary": "Error generating summary: model 'llama3' not found (status code: 404)"
+            }
+        }
+    ]
+}
