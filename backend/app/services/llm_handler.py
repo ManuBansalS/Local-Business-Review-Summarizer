@@ -1,6 +1,8 @@
 import os
 # from openai import OpenAI
 import ollama
+# from langchain_google_genai import ChatGoogleGenerativeAI
+# from langchain_core.messages import SystemMessage, HumanMessage
 from dotenv import load_dotenv
 from app.utils.context_manager import context_manager
 
@@ -16,6 +18,9 @@ class LLMHandler:
         # self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.model = os.getenv("OLLAMA_MODEL", "qwen2.5:0.5b")
         self.base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+        # self.model = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+        # self.api_key = os.getenv("GEMINI_API_KEY")
+        # self.llm = ChatGoogleGenerativeAI(model=self.model, google_api_key=self.api_key)
 
     def generate_summary(self, business_name: str, retrieved_context: list) -> str:
         """
@@ -85,6 +90,12 @@ class LLMHandler:
                 {'role': 'user', 'content': user_prompt},
             ])
             summary = response['message']['content']
+            
+            # response = self.llm.invoke([
+            #     SystemMessage(content=system_prompt),
+            #     HumanMessage(content=user_prompt)
+            # ])
+            # summary = response.content
             
             context_manager.log_step("llm_synthesis_completed", "Generated final summary successfully")
             return summary

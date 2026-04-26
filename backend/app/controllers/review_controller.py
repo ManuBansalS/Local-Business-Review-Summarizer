@@ -22,7 +22,7 @@ async def summarize_business(request: ReviewRequest):
         context_manager.start_request(request.business_name, request.location)
         
         # 2. Fetch data via MCP Bridge
-        reviews = mcp_server.execute_tool("fetch_business_reviews", {
+        reviews, is_cached = mcp_server.execute_tool("fetch_business_reviews", {
             "business_name": request.business_name,
             "location": request.location
         })
@@ -33,7 +33,10 @@ async def summarize_business(request: ReviewRequest):
             return {"summary": summary, "request_id": context_manager.request_id}
 
         # 3. Process and Index in RAG Pipeline
-        rag_pipeline.process_and_index(reviews)
+        if not is_cached:
+            rag_pipeline.process_and_index(reviews)
+        else:
+            context_manager.log_step("rag_skipped", "Data loaded from cache, skipping re-indexing")
         
         # 4. Retrieve context
         query = f"What are the pros and cons of {request.business_name}?"

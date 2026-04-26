@@ -1,0 +1,35 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+
+# Node / React
+node_modules/
+build/
+dist/
+.npm/
+
+# Local Storage / Vector DB Data
+backend/database/chroma_db/*
+backend/data/raw/*
+backend/data/context/*
+backend/backend/database/chroma_db/*
+backend/backend/data/raw/*
+backend/backend/data/context/*
+*.sqlite3
+*.json
+*.bin
+*.db
+
+# IDEs / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

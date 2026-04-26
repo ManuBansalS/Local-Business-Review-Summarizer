@@ -43,6 +43,36 @@ const App = () => {
     }
   };
 
+  const handleHistoryClick = async (item) => {
+    const finalizedStep = item.steps.find(s => s.step === 'request_finalized');
+    if (finalizedStep && finalizedStep.data && finalizedStep.data.summary) {
+      setBusinessName(item.input.business_name);
+      setLocation(item.input.location || '');
+      setResult({
+        business_name: item.input.business_name,
+        summary: finalizedStep.data.summary,
+        request_id: item.request_id
+      });
+      setError(null);
+    } else {
+      // Fallback: Re-fetch using backend cache
+      setBusinessName(item.input.business_name);
+      setLocation(item.input.location || '');
+      setLoading(true);
+      setError(null);
+      setResult(null);
+      try {
+        const data = await reviewService.summarize(item.input.business_name, item.input.location || '');
+        setResult(data);
+        fetchHistory();
+      } catch (err) {
+        setError(err.response?.data?.detail || "An unexpected error occurred.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen p-4 md:p-8">
       {/* Header */}
@@ -125,7 +155,11 @@ const App = () => {
               {history.length === 0 ? (
                 <p className="text-gray-500 text-sm italic text-center py-4">No recent activity</p>
               ) : history.map((item) => (
-                <div key={item.request_id} className="glass-card p-3 rounded-xl text-sm border-l-2 border-l-brand-500">
+                <div 
+                  key={item.request_id} 
+                  onClick={() => handleHistoryClick(item)}
+                  className="glass-card p-3 rounded-xl text-sm border-l-2 border-l-brand-500 cursor-pointer hover:bg-white/5 transition-colors"
+                >
                   <div className="flex justify-between items-start mb-1">
                     <span className="font-medium text-gray-200 truncate">{item.input.business_name}</span>
                     <span className="text-[10px] text-gray-500">{new Date(item.timestamp).toLocaleTimeString()}</span>

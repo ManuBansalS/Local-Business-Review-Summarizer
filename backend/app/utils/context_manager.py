@@ -9,8 +9,13 @@ class ContextManager:
     Manages the 'input flow' and execution context for each search request.
     Stores logs in a structured format to allow debugging and auditing of past events.
     """
-    def __init__(self, storage_dir: str = "backend/data/context"):
-        self.storage_dir = storage_dir
+    def __init__(self, storage_dir: str = None):
+        if storage_dir is None:
+            BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            self.storage_dir = os.path.join(BASE_DIR, "data", "context")
+        else:
+            self.storage_dir = storage_dir
+            
         if not os.path.exists(self.storage_dir):
             os.makedirs(self.storage_dir)
         self.current_context: Dict[str, Any] = {}
