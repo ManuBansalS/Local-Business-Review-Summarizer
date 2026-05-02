@@ -1,5 +1,5 @@
 import os
-from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 from langchain_core.messages import SystemMessage, HumanMessage
 from dotenv import load_dotenv
 from app.utils.context_manager import context_manager
@@ -15,11 +15,10 @@ class LLMHandler:
         self.api_key = os.getenv("GROQ_API_KEY")
         self.base_url = "https://api.groq.com/openai/v1"
         
-        # Initialize Groq client using OpenAI compatibility
-        self.llm = ChatOpenAI(
+        # Initialize Groq client using native package
+        self.llm = ChatGroq(
             api_key=self.api_key,
-            base_url=self.base_url,
-            model=self.model,
+            model_name=self.model,
             max_tokens=2048,
         )
 

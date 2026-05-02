@@ -2,12 +2,24 @@ import os
 import chromadb
 from typing import List
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
+from langchain_core.embeddings import Embeddings
 from langchain_community.vectorstores import Chroma
 from dotenv import load_dotenv
 from app.utils.context_manager import context_manager
 
 load_dotenv()
+
+class LightweightONNXEmbeddings(Embeddings):
+    """Langchain wrapper for Chroma's lightweight ONNX embedding function."""
+    def __init__(self):
+        self.ef = DefaultEmbeddingFunction()
+        
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        return self.ef(texts)
+
+    def embed_query(self, text: str) -> List[float]:
+        return self.ef([text])[0]
 
 class RAGPipeline:
     """
@@ -38,10 +50,8 @@ class RAGPipeline:
             self.persist_directory = os.path.join(BASE_DIR, "database", "chroma_db")
             self.use_cloud = False
         
-        # Initialize embeddings using local sentence-transformers
-        self.embeddings = HuggingFaceEmbeddings(
-            model_name="all-MiniLM-L6-v2"
-        )
+        # Initialize lightweight ONNX embeddings to save memory and avoid HF API Token permission issues
+        self.embeddings = LightweightONNXEmbeddings()
         
         # Text splitter configuration
         self.text_splitter = RecursiveCharacterTextSplitter(
