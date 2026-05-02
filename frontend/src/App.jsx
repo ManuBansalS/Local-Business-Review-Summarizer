@@ -39,7 +39,11 @@ const App = () => {
       setResult(data);
       fetchHistory();
     } catch (err) {
-      setError(err.response?.data?.detail || "An unexpected error occurred.");
+      if (err.response) {
+        setError(err.response?.data?.detail || "An unexpected error occurred.");
+      } else {
+        setError(`Network Error: ${err.message}. Please check CORS or API URL.`);
+      }
     } finally {
       setLoading(false);
     }
@@ -68,7 +72,11 @@ const App = () => {
         setResult(data);
         fetchHistory();
       } catch (err) {
-        setError(err.response?.data?.detail || "An unexpected error occurred.");
+        if (err.response) {
+          setError(err.response?.data?.detail || "An unexpected error occurred.");
+        } else {
+          setError(`Network Error: ${err.message}. Please check CORS or API URL.`);
+        }
       } finally {
         setLoading(false);
       }
