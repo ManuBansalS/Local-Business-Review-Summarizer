@@ -2,9 +2,7 @@ import os
 import chromadb
 from typing import List
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-# from langchain_openai import OpenAIEmbeddings
-from langchain_community.embeddings import OllamaEmbeddings
-# from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from dotenv import load_dotenv
 from app.utils.context_manager import context_manager
@@ -13,10 +11,9 @@ load_dotenv()
 
 class RAGPipeline:
     """
-    RAG Pipeline: Chunking, Embedding, and ChromaDB storage.
+    RAG Pipeline: Chunking, Embedding, and ChromaDB storage using Cloud Embeddings.
     """
     def __init__(self):
-        # self.openai_api_key = os.getenv("OPENAI_API_KEY")
         self.collection_name = os.getenv("CHROMADB_COLLECTION", "business_reviews")
         
         # Configure ChromaDB Cloud Client
@@ -41,13 +38,10 @@ class RAGPipeline:
             self.persist_directory = os.path.join(BASE_DIR, "database", "chroma_db")
             self.use_cloud = False
         
-        # Initialize embeddings
-        # self.embeddings = OpenAIEmbeddings(openai_api_key=self.openai_api_key)
-        self.embeddings = OllamaEmbeddings(model="nomic-embed-text")
-        # self.embeddings = GoogleGenerativeAIEmbeddings(
-        #     model="models/gemini-embedding-2",
-        #     google_api_key=os.getenv("GEMINI_API_KEY")
-        # )
+        # Initialize embeddings using local sentence-transformers
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name="all-MiniLM-L6-v2"
+        )
         
         # Text splitter configuration
         self.text_splitter = RecursiveCharacterTextSplitter(
